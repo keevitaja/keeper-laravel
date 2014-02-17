@@ -1,6 +1,6 @@
 {
     "name": "keevitaja/keeper",
-    "description": "Laravel 4.1 Guard extension",
+    "description": "Laravel 4.1 Guard extension for role/permission functionality",
     "keywords": ["laravel", "auth", "guard"],
     "authors": [
         {

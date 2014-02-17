@@ -42,6 +42,12 @@ You may add as many extra columns to the tables as you see fit.
 
 ## Usage
 
+This package is not user/role/permission CRUD because there can be n+1 ways to it. Keeper takes care only the authentication part. As does guard. Though following models are provided with nessesary relationships:
+
+- Keevitaja\Keeper\Models\User
+- Keevitaja\Keeper\Models\Role
+- Keevitaja\Keeper\Models\Permission
+
 All methods return boolean
 
 	Keeper::hasRole($userId, $roleName)
@@ -129,10 +135,10 @@ and permissions
 
 This setup gives following:
 
-- `invoices/show` can be access by all users who have `finance` role
-- `invoices/create` can be access by all users who have `finance` role and `invoices.create` permission
-- `invoices/destroy` can be access by all users who have `finance` role and `invoices.destroy` permission
-- `invoices/update` can be access by all users who have `invoices.update` permission
+- `invoices/show` can be accessed by all users who have `finance` role
+- `invoices/create` can be accessed by all users who have `finance` role and `invoices.create` permission
+- `invoices/destroy` can be accessed by all users who have `finance` role and `invoices.destroy` permission
+- `invoices/update` can be accessed by all users who have `invoices.update` permission
 
 It does not matter, if permission is given to user directly (permission_user pivot) or through a role (permission_role pivot).
 

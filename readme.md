@@ -123,6 +123,8 @@ Route::group(['prefix' => 'invoices', 'before' => 'finance'], function()
 Route::get('invoices/update', 'InvoicesController@update')->before('invoices.update');
 ```
 
+Filter names are role and permission names.
+
 For this examples you need role 
 
 - finance 

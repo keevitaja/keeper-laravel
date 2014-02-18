@@ -54,14 +54,6 @@ All methods return boolean
 
 Determine if user belongs to role
 
-	Keeper::hasDirectPermission($userId, $permissionName)
-
-Determine if user has a direct permission
-
-	Keeper::hasRolePermission($userId, $permissionName)
-
-Determine if user has permission through a role
-
 	Keeper::hasPermission($userId, $permissionName)
 
 Determine if user has permission

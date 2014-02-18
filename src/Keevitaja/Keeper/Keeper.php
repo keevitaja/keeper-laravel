@@ -50,7 +50,7 @@ class Keeper {
 	 *
 	 * @return boolean
 	 */
-	public function hasDirectPermission($userId, $permissionName)
+	protected function hasDirectPermission($userId, $permissionName)
 	{
 		return $this->user->hasDirectPermission($userId, $permissionName);
 	}
@@ -63,7 +63,7 @@ class Keeper {
 	 *
 	 * @return boolean
 	 */
-	public function hasRolePermission($userId, $permissionName)
+	protected function hasRolePermission($userId, $permissionName)
 	{
 		return $this->user->hasRolePermission($userId, $permissionName);
 	}

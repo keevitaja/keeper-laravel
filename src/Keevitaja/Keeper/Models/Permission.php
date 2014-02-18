@@ -10,30 +10,12 @@ use Eloquent;
 
 class Permission extends Eloquent {
 
+	use Traits\PermissionTrait;
+
 	/**
 	 * Guarded attributes
 	 *
 	 * @var array
 	 */
 	protected $guarded = ['id', 'created_at', 'updated_at'];
-
-	/**
-	 * Users table pivot relationsship
-	 *
-	 * @return object
-	 */
-	public function users()
-	{
-		return $this->belongsToMany('Keevitaja\Keeper\Models\User');
-	}
-
-	/**
-	 * Roles table pivot relationsship
-	 *
-	 * @return object
-	 */
-	public function roles()
-	{
-		return $this->belongsToMany('Keevitaja\Keeper\Models\Role');
-	}
 }

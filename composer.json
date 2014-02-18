@@ -1,7 +1,7 @@
 {
     "name": "keevitaja/keeper",
     "description": "Laravel 4.1 Guard extension for role/permission functionality",
-    "keywords": ["laravel", "auth", "guard"],
+    "keywords": ["laravel", "authentication", "guard", "roles", "permissions"],
     "authors": [
         {
             "name": "Tanel Tammik",
@@ -9,7 +9,7 @@
         }
     ],
     "require": {
-        "php": ">=5.3.0",
+        "php": ">=5.4.0",
         "illuminate/support": "4.1.*"
     },
     "autoload": {

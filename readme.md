@@ -82,6 +82,8 @@ User can belong to a role or have a permission. Permissions can be given through
 
 `::hasPermission` checks, if user has permission given directly or through a role.
 
+Roles and permission work extremly well with laravel route filter system. See usage example below.
+
 ## Managing roles and permissions
 
 users, roles and permission tables have pivot relations. So to add user to role:

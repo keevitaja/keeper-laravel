@@ -1,19 +1,19 @@
-# Keeper - Laravel 4.1 Guard extension
+# Keeper - Laravel authentication driver "eloquent" extension
 
-Adds role and permission functionality to Laravel 4.1 Guard class
+Keeper is Laravels native authentication driver "eloquent" extension. It adds roles and permissions functionality by extending the Guard class. All methods provided by Guard via Auth facade will work!
+
+Keeper is not CRUD for user/role/permission database manipulation. There are just too many ways people would like to do it. We would end up with another Sentry and tonns of wierd exceptions which need to be catched. And that is no fun...
+
+Keeper requires atleast Laravel 4.1 and PHP 5.4
 
 ## Install
 
-Install this package using composer
+To install Keeper package with composer edit composer.json file and run `composer update`.
 
 	"require": {
 	    "laravel/framework": "4.1.*",
 	    "keevitaja/keeper": "dev-master"
 	},
-
-and run 
-
-	composer update
 
 Change Auth driver in app/config/auth.php
 
@@ -31,58 +31,39 @@ Migrate tables
 
 	php artisan migrate --package=keevitaja/keeper
 
-Following tables are created:
+After that you have users, roles and permissions tables with pivot tables.
 
-	users: 			id, email, password, created_at, updated_at
-	roles: 			id, name, created_at, updated_at
-	permissions:	id, name, created_at, updated_at
+	users:          id, email, password, created_at, updated_at
+	roles:          id, name, created_at, updated_at
+	permissions:    id, name, created_at, updated_at
 
-You may add as many extra columns to the tables as you see fit.
+To get a hint, how to name roles and permissions, take a look at the Usage example below.
 
+If you need extra columns you can add them by creating your own migrations or copy migrations shipped with this package to your `app/database/migrations` folder and update them as needed and then do `php artisan migrate`.
 
 ## Usage
 
-This package is not user/role/permission CRUD because there can be n+1 ways to it. Keeper takes care only the authentication part. As does guard. Though following models are provided with nessesary relationships:
+- `Keeper::hasRole($userId, $roleName)` - Determine if user has a role
 
-- Keevitaja\Keeper\Models\User
-- Keevitaja\Keeper\Models\Role
-- Keevitaja\Keeper\Models\Permission
+- `Keeper::hasPermission($userId, $permissionName)` - Determine if user has a permission
 
-All methods return boolean
+- `Auth::hasRole($roleName)` - Determine if logged user has a role
 
-	Keeper::hasRole($userId, $roleName)
+- `Auth::hasPermission($permissionName)` - Determine if logged user has a permission
 
-Determine if user belongs to role
+All above methods return boolean.
 
-	Keeper::hasPermission($userId, $permissionName)
+`::hasRole` checks only, if user has a role. This method does not check permissions!
 
-Determine if user has permission
+`::hasPermission` checks, if user has permission permission directly or by a role.
 
-	Auth::hasRole($roleName)
-
-Determine if logged user belongs to role
-
-	Auth::hasPermission($permissionName)
-
-Determine if logged user has permission
-
-All methods provided by Laravel native Guard class are present and working.
-
-User can belong to a role or have a permission. Permissions can be given through a role as well. 
-
-`::hasRole` checks only, if user belongs to the role. Permissions are not included. Suitable for smaller projects.
-
-`::hasPermission` checks, if user has permission given directly or through a role.
-
-Roles and permission work extremly well with laravel route filter system. See usage example below.
+User can have a role or permission. Role can have a permission as well. User will have also all permissions from the role he/she has. Roles and permission work extremly well with laravel route and filter system. It just makes sense to use them together. See the Usage example below.
 
 ## Managing roles and permissions
 
-users, roles and permission tables have pivot relations. So to add user to role:
+Keeper does not provide CRUD for database manipulation. All model methods are abstracted into traits, so it would be possible to use relations really easy in other Eloquent models in your project. Just for the small example, the next line will give user with ID of 1 the role with ID of 3.
 
 	Keevitaja\Keeper\Models\User::find(1)->roles()->attach(3)
-
-where 1 is user ID and 3 is role ID. same goes for permissions.
 
 ## Usage example
 
@@ -117,9 +98,9 @@ Route::group(['prefix' => 'invoices', 'before' => 'finance'], function()
 Route::get('invoices/update', 'InvoicesController@update')->before('invoices.update');
 ```
 
-Filter names are role and permission names.
+Filter names in this example are the role and permission names. You can name permissions any way you like, but `controller.permission` seems to make sense. At least for me.
 
-For this examples you need role 
+For this example to work you need a role 
 
 - finance 
 
@@ -129,7 +110,7 @@ and permissions
 - invoices.update
 - invoices.destroy
 
-This setup gives following:
+These routes and filters give you the following setup:
 
 - `invoices/show` can be accessed by all users who have `finance` role
 - `invoices/create` can be accessed by all users who have `finance` role and `invoices.create` permission

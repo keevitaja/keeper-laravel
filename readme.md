@@ -6,6 +6,11 @@ Keeper is not CRUD for user/role/permission database manipulation. There are jus
 
 Keeper requires atleast Laravel 4.1 and PHP 5.4
 
+## Todo
+
+- handle user/role/permission not found errors
+- cache db queries
+
 ## Install
 
 To install Keeper package with composer edit composer.json file and run `composer update`.

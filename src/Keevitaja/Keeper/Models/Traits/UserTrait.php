@@ -6,6 +6,8 @@
 * @license http://www.opensource.org/licenses/mit-license.html MIT License
 */
 
+use Keevitaja\Keeper\Models\Exceptions\UserNotFoundException;
+
 trait UserTrait {
 
 	/**
@@ -61,6 +63,22 @@ trait UserTrait {
 	}
 
 	/**
+	 * Find user scope or throw exception on fail
+	 *
+	 * @param  integer $userId
+	 *
+	 * @return mixed
+	 */
+	public function scopeFindUser($query, $userId)
+	{
+		$user = $query->find($userId);
+
+		if ( ! is_null($user)) return $user;
+
+		throw new UserNotFoundException('User with ID of "' . $userId . '" was not found!');
+	}
+
+	/**
 	 * Determine if user belongs to role
 	 *
 	 * @param  integer $userId
@@ -70,7 +88,7 @@ trait UserTrait {
 	 */
 	public function hasRole($userId, $roleName)
 	{
-		return $this->find($userId)->role($roleName)->exists();
+		return $this->findUser($userId)->role($roleName)->exists();
 	}
 
 	/**
@@ -83,7 +101,7 @@ trait UserTrait {
 	 */
 	public function hasDirectPermission($userId, $permissionName)
 	{
-		return $this->find($userId)->permission($permissionName)->exists();
+		return $this->findUser($userId)->permission($permissionName)->exists();
 	}
 
 	/**
@@ -96,11 +114,10 @@ trait UserTrait {
 	 */
 	public function hasRolePermission($userId, $permissionName)
 	{
-		return $this
+		return $this->findUser($userId)
 			->leftJoin('role_user', 'users.id', '=', 'role_user.user_id')
 			->leftJoin('permission_role', 'role_user.role_id', '=', 'permission_role.role_id')
 			->leftJoin('permissions', 'permissions.id', '=', 'permission_role.permission_id')
-			->where('users.id', $userId)
 			->where('permissions.name', $permissionName)
 			->exists();
 	}

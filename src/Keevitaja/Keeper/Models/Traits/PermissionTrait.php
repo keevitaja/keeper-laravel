@@ -6,6 +6,8 @@
 * @license http://www.opensource.org/licenses/mit-license.html MIT License
 */
 
+use Keevitaja\Keeper\Models\Exceptions\PermissionNotFoundException;
+
 trait PermissionTrait {
 
 	/**
@@ -26,5 +28,21 @@ trait PermissionTrait {
 	public function roles()
 	{
 		return $this->belongsToMany('Keevitaja\Keeper\Models\Role');
+	}
+
+	/**
+	 * Find permission scope or throw exception on fail
+	 *
+	 * @param  integer $permissionId
+	 *
+	 * @return mixed
+	 */
+	public function scopeFindPermission($query, $permissionId)
+	{
+		$permission = $query->find($permissionId);
+
+		if ( ! is_null($permission)) return $permission;
+
+		throw new PermissionNotFoundException('Permission with ID of "' . $permissionId . '" was not found!');
 	}
 }

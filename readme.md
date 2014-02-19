@@ -8,7 +8,6 @@ Keeper requires atleast Laravel 4.1 and PHP 5.4
 
 ## Todo
 
-- handle user/role/permission not found errors
 - cache db queries
 
 ## Install
@@ -62,13 +61,15 @@ All above methods return boolean.
 
 `::hasPermission` checks, if user has permission permission directly or by a role.
 
-User can have a role or permission. Role can have a permission as well. User will have also all permissions from the role he/she has. Roles and permission work extremly well with laravel route and filter system. It just makes sense to use them together. See the Usage example below.
+User can have roles and permissions. Role can have permissions as well. User will have also all permissions from the role he/she has. Roles and permission work extremly well with laravel route and filter system. It just makes sense to use them together. See the Usage example below.
 
 ## Managing roles and permissions
 
 Keeper does not provide CRUD for database manipulation. All model methods are abstracted into traits, so it would be possible to use relations really easy in other Eloquent models in your project. Just for the small example, the next line will give user with ID of 1 the role with ID of 3.
 
-	Keevitaja\Keeper\Models\User::find(1)->roles()->attach(3)
+	Keevitaja\Keeper\Models\User::findUser(1)->roles()->attach(3)
+
+For findUser() please see Custom exceptions below.
 
 ## Usage example
 
@@ -123,6 +124,19 @@ These routes and filters give you the following setup:
 - `invoices/update` can be accessed by all users who have `invoices.update` permission
 
 It does not matter, if permission is given to user directly (permission_user pivot) or through a role (permission_role pivot).
+
+## Custom exceptions
+
+If provided user ID does not have match in database, following exception will be thrown.
+
+	Keevitja\Keeper\Models\Exceptions\UserNotFoundException
+
+If you want to use this exception, swap User::find() with User::findUser().
+
+Same goes for role and permission model.
+
+	Keevitja\Keeper\Models\Exceptions\RoleNotFoundException
+	Keevitja\Keeper\Models\Exceptions\PermissionNotFoundException
 
 ## If you like this 
 

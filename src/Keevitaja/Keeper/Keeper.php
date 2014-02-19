@@ -43,32 +43,6 @@ class Keeper {
 	}
 
 	/**
-	 * Determine if user has a direct permission
-	 *
-	 * @param  integer $userId
-	 * @param  string $permissionName
-	 *
-	 * @return boolean
-	 */
-	protected function hasDirectPermission($userId, $permissionName)
-	{
-		return $this->user->hasDirectPermission($userId, $permissionName);
-	}
-
-	/**
-	 * Determine if user has permission through a role
-	 *
-	 * @param  integer $userId
-	 * @param  string $permissionName
-	 *
-	 * @return boolean
-	 */
-	protected function hasRolePermission($userId, $permissionName)
-	{
-		return $this->user->hasRolePermission($userId, $permissionName);
-	}
-
-	/**
 	 * Determine if user has permission
 	 *
 	 * @param  integer $userId
@@ -78,8 +52,8 @@ class Keeper {
 	 */
 	public function hasPermission($userId, $permissionName)
 	{
-		if ($this->hasDirectPermission($userId, $permissionName)) return true;
+		if ($this->user->hasDirectPermission($userId, $permissionName)) return true;
 
-		return $this->hasRolePermission($userId, $permissionName);
+		return $this->user->hasRolePermission($userId, $permissionName);
 	}
 }

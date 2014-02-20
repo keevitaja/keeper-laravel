@@ -1,8 +1,8 @@
-# Keeper - Laravel authentication driver "eloquent" extension
+# Keeper - role/permission based authentication package using Guard
 
-Keeper is Laravels native authentication driver "eloquent" extension. It adds roles and permissions functionality by extending the Guard class. All methods provided by Guard via Auth facade will work!
+Keeper  adds roles and permissions functionality to the laravels authentication driver eloquent by extending Guard class. This means, that everything you can do with Auth:: still exists.
 
-Keeper is not CRUD for user/role/permission database manipulation. There are just too many ways people would like to do it. We would end up with another Sentry and tonns of wierd exceptions which need to be catched. And that is no fun...
+Keeper is not a CRUD for user/role/permission database manipulation. There are just too many ways people would like to do it and would end up with another Sentry with several wierd exceptions which need to be catched. And that's no fun...
 
 Keeper requires atleast Laravel 4 and PHP 5.4
 
@@ -12,7 +12,7 @@ Keeper requires atleast Laravel 4 and PHP 5.4
 
 ## Install
 
-To install Keeper package with composer edit composer.json file and run `composer update`.
+To install Keeper package using composer, edit composer.json file and run `composer update`.
 
 	"require": {
 	    "laravel/framework": "4.1.*",

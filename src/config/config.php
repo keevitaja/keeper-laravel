@@ -9,7 +9,7 @@
 return [
 	
 	// enable/disable caching
-	'cache' => false,
+	'cache' => true,
 
 	// idintifier for cache
 	'cache_id' => 'keevitaja.keeper',
@@ -18,5 +18,5 @@ return [
 	'cache_expire' => 10,
 
 	// enable/disable cache tags usage
-	'cache_tags' => false
+	'cache_tags' => true
 ];

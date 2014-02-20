@@ -29,20 +29,4 @@ trait RoleTrait {
 	{
 		return $this->belongsToMany('Keevitaja\Keeper\Models\User');
 	}
-
-	/**
-	 * Find role scope or throw exception on fail
-	 *
-	 * @param  integer $roleId
-	 *
-	 * @return mixed
-	 */
-	public function scopeFindRole($query, $roleId)
-	{
-		$role = $query->find($roleId);
-
-		if ( ! is_null($role)) return $role;
-
-		throw new RoleNotFoundException('Role with ID of "' . $roleId . '" was not found!');
-	}
 }

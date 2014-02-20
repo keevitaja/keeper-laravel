@@ -29,20 +29,4 @@ trait PermissionTrait {
 	{
 		return $this->belongsToMany('Keevitaja\Keeper\Models\Role');
 	}
-
-	/**
-	 * Find permission scope or throw exception on fail
-	 *
-	 * @param  integer $permissionId
-	 *
-	 * @return mixed
-	 */
-	public function scopeFindPermission($query, $permissionId)
-	{
-		$permission = $query->find($permissionId);
-
-		if ( ! is_null($permission)) return $permission;
-
-		throw new PermissionNotFoundException('Permission with ID of "' . $permissionId . '" was not found!');
-	}
 }

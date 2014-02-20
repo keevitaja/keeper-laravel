@@ -4,7 +4,7 @@ Keeper is Laravels native authentication driver "eloquent" extension. It adds ro
 
 Keeper is not CRUD for user/role/permission database manipulation. There are just too many ways people would like to do it. We would end up with another Sentry and tonns of wierd exceptions which need to be catched. And that is no fun...
 
-Keeper requires atleast Laravel 4.1 and PHP 5.4
+Keeper requires atleast Laravel 4 and PHP 5.4
 
 ## Todo
 

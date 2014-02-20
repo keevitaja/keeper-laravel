@@ -7,7 +7,7 @@
 */
 
 use Illuminate\Auth\Guard;
-use Keeper;
+use Keeper as K;
 
 class GuardExtension extends Guard {
 
@@ -23,7 +23,7 @@ class GuardExtension extends Guard {
 	{
 		if ( ! $this->check()) return false;
 
-		return Keeper::hasRole($this->user()->getAuthIdentifier(), $roleName);
+		return K::hasRole($this->user()->getAuthIdentifier(), $roleName);
 	}
 
 	/**
@@ -38,6 +38,6 @@ class GuardExtension extends Guard {
 	{
 		if ( ! $this->check()) return false;
 
-		return Keeper::hasPermission($this->user()->getAuthIdentifier(), $permissionName);
+		return K::hasPermission($this->user()->getAuthIdentifier(), $permissionName);
 	}
 }

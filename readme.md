@@ -1,9 +1,9 @@
-# Keeper
+# Keeper for Laravel
 ### role/permission based authentication package using Guard
 
 Keeper  adds roles and permissions functionality to the laravels authentication driver eloquent by extending Guard class. This means, that everything you can do with Auth:: still exists.
 
-Keeper is not a CRUD for user/role/permission database manipulation. There are just too many ways people would like to do it and would end up with another Sentry with several wierd exceptions which need to be catched. And that's no fun...
+Keeper is not a CRUD for user/role/permission database manipulation. There are just too many ways people would like to do it and we would end up with another Sentry with several wierd exceptions which need to be catched. And that's no fun...
 
 Keeper requires atleast Laravel 4 and PHP 5.4
 
@@ -44,7 +44,9 @@ After that you have users, roles and permissions tables with pivot tables.
 
 To get a hint, how to name roles and permissions, take a look at the Usage example below.
 
-If you need extra columns you can add them by creating your own migrations or copy migrations shipped with this package to your `app/database/migrations` folder and update them as needed and then do `php artisan migrate`.
+Keeper tables are set up with pivot relations, so for example the users and roles table will have role_user pivot relationship table. Refer to eloquent documentation under [pivot section](http://laravel.com/docs/eloquent#working-with-pivot-tables) on how to make connections between user and role.
+
+You can add as many extra columns to the users, roles and permissions table as you need. You can create new migrations to update created tables or create your own migrations and not migrate from the backage migrations. That's up to you. 
 
 ## Usage
 

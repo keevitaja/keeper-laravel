@@ -50,29 +50,25 @@ You can add as many extra columns to the users, roles and permissions table as y
 
 ## Usage
 
-#### `Keeper::hasRole($userId, $roleName)`
+##### `Keeper::hasRole($userId, $roleName)`
 
 Determine if user has a role - returns true/false
 
-#### `Keeper::hasPermission($userId, $permissionName)`
+##### `Keeper::hasPermission($userId, $permissionName)`
 
 Determine if user has a permission - returns true/false
 
-#### `Keeper::flushCache()`
+##### `Keeper::flushCache()`
 
 Flushes cache, please see cache section below - returns void
 
-#### `Auth::hasRole($roleName)`
+##### `Auth::hasRole($roleName)`
 
 Determine if logged user has a role - returns true/false
 
-#### `Auth::hasPermission($permissionName)`
+##### `Auth::hasPermission($permissionName)`
 
 Determine if logged user has a permission  - returns true/false
-
-`::hasRole` Determines only, if user has a role.
-
-`::hasPermission` Determines, if user has a permission permission directly or by a role.
 
 User can have multiple roles and multiple permissions. Role can have multiple permissions as well. Permissions can be given to user directly or through a role. Keeper is very flexible and suitable for larger and smaller projects. If you need, you can ignore permissions totally and use only roles.
 

@@ -46,27 +46,27 @@ To get a hint, how to name roles and permissions, take a look at the Usage examp
 
 Keeper tables are set up with pivot relations, so for example the users and roles table will have role_user pivot relationship table. Refer to eloquent documentation under [pivot section](http://laravel.com/docs/eloquent#working-with-pivot-tables) on how to make connections between user and role.
 
-You can add as many extra columns to the users, roles and permissions table as you need. You can create new migrations to update created tables or create your own migrations and not migrate from the backage migrations. That's up to you. 
+You can add as many extra columns to the users, roles and permissions table as you need. You can create new migrations to update created tables or create your own migrations and not migrate from the package migrations. That's up to you. 
 
 ## Usage
 
-- `Keeper::hasRole($userId, $roleName)` - Determine if user has a role
+- `Keeper::hasRole($userId, $roleName)` - Determine if user has a role - returns true/false
 
-- `Keeper::hasPermission($userId, $permissionName)` - Determine if user has a permission
+- `Keeper::hasPermission($userId, $permissionName)` - Determine if user has a permission - returns true/false
 
-- `Keeper::flushCache()` - Clears cache, please see cache section below
+- `Keeper::flushCache()` - Flushes cache, please see cache section below - returns void
 
-- `Auth::hasRole($roleName)` - Determine if logged user has a role
+- `Auth::hasRole($roleName)` - Determine if logged user has a role - returns true/false
 
-- `Auth::hasPermission($permissionName)` - Determine if logged user has a permission
+- `Auth::hasPermission($permissionName)` - Determine if logged user has a permission  - returns true/false
 
-All above methods return boolean.
+`::hasRole` Determines only, if user has a role.
 
-`::hasRole` checks only, if user has a role. This method does not check permissions!
+`::hasPermission` Determines, if user has permission permission directly or by a role.
 
-`::hasPermission` checks, if user has permission permission directly or by a role.
+User can have multiple roles and multiple permissions. Role can have multiple permissions as well. Permissions can be given to user directly or through a role. Keeper is very flexible and suitable for larger and smaller projects. If you need, you can ignore permissions totally and use only roles.
 
-User can have roles and permissions. Role can have permissions as well. User will have also all permissions from the role he/she has. Roles and permission work extremly well with laravel route and filter system. It just makes sense to use them together. See the Usage example below.
+Roles and permission work extremly well with laravel route and filter system. It just makes sense to use them together. See the Usage example below.
 
 ## Cache
 

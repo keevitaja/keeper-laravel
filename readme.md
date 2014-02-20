@@ -8,7 +8,7 @@ Keeper requires atleast Laravel 4.1 and PHP 5.4
 
 ## Todo
 
-- cache db queries
+- testing
 
 ## Install
 
@@ -51,6 +51,8 @@ If you need extra columns you can add them by creating your own migrations or co
 
 - `Keeper::hasPermission($userId, $permissionName)` - Determine if user has a permission
 
+- `Keeper::flushCache()` - Clears cache, please see cache section below
+
 - `Auth::hasRole($roleName)` - Determine if logged user has a role
 
 - `Auth::hasPermission($permissionName)` - Determine if logged user has a permission
@@ -63,13 +65,35 @@ All above methods return boolean.
 
 User can have roles and permissions. Role can have permissions as well. User will have also all permissions from the role he/she has. Roles and permission work extremly well with laravel route and filter system. It just makes sense to use them together. See the Usage example below.
 
+## Cache
+
+By default cache is disabled. To activate it, run
+
+	php artisan config:publish keevitaja/keeper
+
+Now you have copy of the config file available in the `app/config/packages/vendor/package` folder where it is safe to modify it.
+
+- `cache` - enables or disables the cache feature
+- `cache_id` - identifier for cache key/tag names. no reason to change it
+- `cache_expire` - expiration time for cache in minutes
+- `cache_tags` - enables or disables the usage of cache tags
+
+Cache Tags are not available with file or database cache driver. As `Keeper::flushCache()` requires cache tags. Flushing feature is only available with the driver which support cache tags. One of them is memcached driver.
+
+`Keeper::flushCache()` flushes only Keeper related cache!
+
+#### Allways clear the cache after database manipulation - users, roles and permissions with pivot tables fall into that category. 
+
+	Keevitaja\Keeper\Models\User::find(1)->roles()->attach(3);
+	Keeper::flushCache();
+
+Example above adds user with ID of 1 to a role with ID of 3 and clears cache.
+
+If you must use file driver, then you probably have to flush entire cache or come up with your own solution. Las resort it to not use cache feature.
+
 ## Managing roles and permissions
 
-Keeper does not provide CRUD for database manipulation. All model methods are abstracted into traits, so it would be possible to use relations really easy in other Eloquent models in your project. Just for the small example, the next line will give user with ID of 1 the role with ID of 3.
-
-	Keevitaja\Keeper\Models\User::findUser(1)->roles()->attach(3)
-
-For findUser() please see Custom exceptions below.
+Keeper does not provide CRUD for database manipulation. All model methods are abstracted into traits, so it would be possible to use relations really easy in other Eloquent models in your project. See one example in Cache section.
 
 ## Usage example
 
@@ -124,19 +148,6 @@ These routes and filters give you the following setup:
 - `invoices/update` can be accessed by all users who have `invoices.update` permission
 
 It does not matter, if permission is given to user directly (permission_user pivot) or through a role (permission_role pivot).
-
-## Custom exceptions
-
-If provided user ID does not have match in database, following exception will be thrown.
-
-	Keevitja\Keeper\Models\Exceptions\UserNotFoundException
-
-If you want to use this exception, swap User::find() with User::findUser().
-
-Same goes for role and permission model.
-
-	Keevitja\Keeper\Models\Exceptions\RoleNotFoundException
-	Keevitja\Keeper\Models\Exceptions\PermissionNotFoundException
 
 ## If you like this 
 

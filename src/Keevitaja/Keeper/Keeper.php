@@ -6,27 +6,25 @@
 * @license http://www.opensource.org/licenses/mit-license.html MIT License
 */
 
-use Keevitaja\Keeper\Models\User;
-use Keevitaja\Keeper\Models\Role;
-use Keevitaja\Keeper\Models\Permission;
+use Keevitaja\Keeper\Cache;
 
 class Keeper {
 
 	/**
-	 * User model
+	 * Cache
 	 *
 	 * @var object
 	 */
-	protected $user;
+	protected $cache;
 
 	/**
 	 * Constructor
 	 *
-	 * @param object $user
+	 * @param object $cache
 	 */
-	public function __construct(User $user)
+	public function __construct(Cache $cache)
 	{
-		$this->user = $user;
+		$this->cache = $cache;
 	}
 
 	/**
@@ -38,12 +36,12 @@ class Keeper {
 	 * @return boolean
 	 */
 	public function hasRole($userId, $roleName)
-	{
-		return $this->user->hasRole($userId, $roleName);
+	{	
+		return $this->cache->get($userId, $roleName, 'role');
 	}
 
 	/**
-	 * Determine if user has permission
+	 * Determine if user has a permission
 	 *
 	 * @param  integer $userId
 	 * @param  string $permissionName
@@ -52,8 +50,16 @@ class Keeper {
 	 */
 	public function hasPermission($userId, $permissionName)
 	{
-		if ($this->user->hasDirectPermission($userId, $permissionName)) return true;
+		return $this->cache->get($userId, $permissionName, 'permission');
+	}
 
-		return $this->user->hasRolePermission($userId, $permissionName);
+	/**
+	 * Flush cache. Works only if cache tags are present.
+	 *
+	 * @return void
+	 */
+	public function flushCache()
+	{
+		$this->cache->flush();
 	}
 }

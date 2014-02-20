@@ -31,51 +31,16 @@ trait UserTrait {
 	}
 
 	/**
-	 * Role relationship scope
-	 *
-	 * @param  object $query
-	 * @param  string $roleName
-	 *
-	 * @return object
-	 */
-	public function scopeRole($query, $roleName)
-	{
-		return $query->whereHas('roles', function($query) use($roleName)
-		{
-			$query->whereName($roleName);
-		});
-	}
-
-	/**
-	 * Permission relationship scope
-	 *
-	 * @param  object $query
-	 * @param  string $permissionName
-	 *
-	 * @return object
-	 */
-	public function scopePermission($query, $permissionName)
-	{
-		return $query->whereHas('permissions', function($query) use($permissionName)
-		{
-			$query->whereName($permissionName);
-		});
-	}
-
-	/**
-	 * Find user scope or throw exception on fail
+	 * Determine, if user with ID exists. Throw error
 	 *
 	 * @param  integer $userId
 	 *
 	 * @return mixed
 	 */
-	public function scopeFindUser($query, $userId)
+	public function checkUser($userId)
 	{
-		$user = $query->find($userId);
-
-		if ( ! is_null($user)) return $user;
-
-		throw new UserNotFoundException('User with ID of "' . $userId . '" was not found!');
+		if (is_null($this->find($userId)))
+			throw new UserNotFoundException('User with ID of "' . $userId . '" was not found!');
 	}
 
 	/**
@@ -88,7 +53,12 @@ trait UserTrait {
 	 */
 	public function hasRole($userId, $roleName)
 	{
-		return $this->findUser($userId)->role($roleName)->exists();
+		return $this
+			->leftJoin('role_user', 'users.id', '=', 'role_user.user_id')
+			->leftJoin('roles', 'roles.id', '=', 'role_user.role_id')
+			->where('users.id', $userId)
+			->where('roles.name', $roleName)
+			->exists();
 	}
 
 	/**
@@ -101,7 +71,12 @@ trait UserTrait {
 	 */
 	public function hasDirectPermission($userId, $permissionName)
 	{
-		return $this->findUser($userId)->permission($permissionName)->exists();
+		return $this
+			->leftJoin('permission_user', 'users.id', '=', 'permission_user.user_id')
+			->leftJoin('permissions', 'permissions.id', '=', 'permission_user.permission_id')
+			->where('users.id', $userId)
+			->where('permissions.name', $permissionName)
+			->exists();
 	}
 
 	/**
@@ -114,11 +89,27 @@ trait UserTrait {
 	 */
 	public function hasRolePermission($userId, $permissionName)
 	{
-		return $this->findUser($userId)
+		return $this
 			->leftJoin('role_user', 'users.id', '=', 'role_user.user_id')
 			->leftJoin('permission_role', 'role_user.role_id', '=', 'permission_role.role_id')
 			->leftJoin('permissions', 'permissions.id', '=', 'permission_role.permission_id')
+			->where('users.id', $userId)
 			->where('permissions.name', $permissionName)
 			->exists();
+	}
+
+	/**
+	 * Determine if user has a permission
+	 *
+	 * @param  integer $userId
+	 * @param  string $permissionName
+	 *
+	 * @return boolean
+	 */
+	public function hasPermission($userId, $permissionName)
+	{
+		if ($this->hasDirectPermission($userId, $permissionName)) return true;
+
+		return $this->hasRolePermission($userId, $permissionName);
 	}
 }

@@ -28,6 +28,8 @@ class KeeperServiceProvider extends ServiceProvider {
 	 */
 	public function boot()
 	{
+		$this->package('keevitaja/keeper');
+
 		Auth::extend('keeper', function() 
 		{
 			$provider = new EloquentUserProvider(

@@ -1,4 +1,5 @@
-# Keeper - role/permission based authentication package using Guard
+# Keeper
+### role/permission based authentication package using Guard
 
 Keeper  adds roles and permissions functionality to the laravels authentication driver eloquent by extending Guard class. This means, that everything you can do with Auth:: still exists.
 

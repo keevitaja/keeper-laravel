@@ -80,7 +80,7 @@ By default cache is disabled. To activate it, run
 
 	php artisan config:publish keevitaja/keeper
 
-Now you have copy of the config file available in the `app/config/packages/vendor/package` folder where it is safe to modify it.
+Now you have copy of the config file available in the `app/config/packages/keevitaja/keeper` folder where it is safe to modify it.
 
 - `cache` - enables or disables the cache feature
 - `cache_id` - identifier for cache key/tag names. no reason to change it

@@ -82,7 +82,7 @@ class Cache {
 	}
 
 	/**
-	 * Get boolen, if cache tags are enabled 
+	 * Get result from with cache tags enabled.
 	 *
 	 * @param  integer $user
 	 * @param  string $name
@@ -106,7 +106,7 @@ class Cache {
 	}
 
 	/**
-	 * Get boolean
+	 * Get result from without cache tags enabled.
 	 *
 	 * @param  integer $user
 	 * @param  string $name

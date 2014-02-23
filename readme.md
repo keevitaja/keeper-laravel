@@ -30,7 +30,7 @@ Add service provider to app/config/app.php
 
 Add facade to app/config/app.php
 
-	'Keeper' => 'Keevitaja\Keeper\Facades\Keeper'
+	'Keeper' => 'Keevitaja\Keeper\KeeperFacade'
 
 Migrate tables
 
@@ -82,10 +82,10 @@ By default cache is disabled. To activate it, run
 
 Now you have copy of the config file available in the `app/config/packages/keevitaja/keeper` folder where it is safe to modify it.
 
-- `cache` - enables or disables the cache feature
-- `cache_id` - identifier for cache key/tag names. no reason to change it
-- `cache_expire` - expiration time for cache in minutes
-- `cache_tags` - enables or disables the usage of cache tags
+- `cache` - enables or disables the cache feature (boolean)
+- `cache_id` - identifier for cache key/tag names. no reason to change it (string)
+- `cache_expire` - expiration time for cache in minutes (integer)
+- `cache_tags` - enables or disables the usage of cache tags (boolean)
 
 Cache Tags are not available with file or database cache driver. As `Keeper::flushCache()` requires cache tags. Flushing feature is only available with the driver which support cache tags. One of them is memcached driver.
 
@@ -98,7 +98,7 @@ Cache Tags are not available with file or database cache driver. As `Keeper::flu
 
 Example above adds user with ID of 1 to a role with ID of 3 and clears cache.
 
-If you must use file driver, then you probably have to flush entire cache or come up with your own solution. Las resort it to not use cache feature.
+If you must use file driver, then you probably have to flush entire cache or come up with your own solution. Last resort would be not to use cache feature.
 
 ## Managing roles and permissions
 

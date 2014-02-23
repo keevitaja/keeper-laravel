@@ -133,7 +133,6 @@ class KeeperCache {
 	protected function tags($user, $name, $type)
 	{
 		$key = $this->makeKey($user, $name, $type);
-
 		$cacheId = $this->cacheId();
 
 		if (Cache::tags($cacheId)->has($key)) return Cache::tags($cacheId)->get($key);

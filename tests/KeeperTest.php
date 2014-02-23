@@ -10,7 +10,7 @@ class KeeperTest extends TestCase {
 	{
 		parent::setUp();
 
-		Artisan::call('migrate');
+		Artisan::call('migrate', ['--bench' => 'keevitaja/keeper']);
 
 		User::create([
 			'email' => 'kala@kala.ee',

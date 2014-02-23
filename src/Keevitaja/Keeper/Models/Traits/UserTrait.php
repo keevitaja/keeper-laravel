@@ -31,19 +31,6 @@ trait UserTrait {
 	}
 
 	/**
-	 * Determine, if user with ID exists. Throw error
-	 *
-	 * @param  integer $userId
-	 *
-	 * @return mixed
-	 */
-	public function checkUser($userId)
-	{
-		if (is_null($this->find($userId)))
-			throw new UserNotFoundException('User with ID of "' . $userId . '" was not found!');
-	}
-
-	/**
 	 * Determine if user belongs to role
 	 *
 	 * @param  integer $userId

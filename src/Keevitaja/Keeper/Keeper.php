@@ -6,7 +6,7 @@
 * @license http://www.opensource.org/licenses/mit-license.html MIT License
 */
 
-use Keevitaja\Keeper\Cache;
+use Keevitaja\Keeper\KeeperCache;
 
 class Keeper {
 
@@ -22,7 +22,7 @@ class Keeper {
 	 *
 	 * @param object $cache
 	 */
-	public function __construct(Cache $cache)
+	public function __construct(KeeperCache $cache)
 	{
 		$this->cache = $cache;
 	}

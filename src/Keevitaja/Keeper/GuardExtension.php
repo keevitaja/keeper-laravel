@@ -7,10 +7,9 @@
 */
 
 use Illuminate\Auth\Guard;
-use Keeper as K;
+use App;
 
 class GuardExtension extends Guard {
-
 	/**
 	 * Determine if logged user belongs to role
 	 *
@@ -23,7 +22,7 @@ class GuardExtension extends Guard {
 	{
 		if ( ! $this->check()) return false;
 
-		return K::hasRole($this->user()->getAuthIdentifier(), $roleName);
+		return App::make('keeper')->hasRole($this->user()->getAuthIdentifier(), $roleName);
 	}
 
 	/**
@@ -38,6 +37,6 @@ class GuardExtension extends Guard {
 	{
 		if ( ! $this->check()) return false;
 
-		return K::hasPermission($this->user()->getAuthIdentifier(), $permissionName);
+		return App::make('keeper')->hasPermission($this->user()->getAuthIdentifier(), $permissionName);
 	}
 }
